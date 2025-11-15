@@ -1,0 +1,5 @@
+{
+  "name": "TradeGuard - 永續合約交易助手",
+  "description": "專業的加密貨幣交易輔助工具，提供下單前檢查清單(Checklist)、持倉追蹤以及交易損益紀錄分析功能。",
+  "requestFramePermissions": []
+}
