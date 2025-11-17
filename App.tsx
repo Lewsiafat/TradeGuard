@@ -51,11 +51,11 @@ const App: React.FC = () => {
 
   // --- Actions ---
 
-  const handleStartTrade = (pair: string, direction: 'LONG' | 'SHORT', notes: string) => {
+  const handleStartTrade = (pair: string, notes: string) => {
     const newTrade: TradeRecord = {
       id: Date.now().toString(),
       pair,
-      direction,
+      // direction is now optional and will be set during position close
       status: TradeStatus.CHECKING,
       startTime: Date.now(),
       notes,
@@ -76,12 +76,13 @@ const App: React.FC = () => {
     }));
   };
 
-  const handleCloseTrade = (tradeId: string, closeData: { openPrice: number; closePrice: number; pnl: number; pnlPercentage: number; notes: string; endTime: number }) => {
+  const handleCloseTrade = (tradeId: string, closeData: { direction: 'LONG' | 'SHORT'; openPrice: number; closePrice: number; pnl: number; pnlPercentage: number; notes: string; endTime: number }) => {
     const trade = activeTrades.find(t => t.id === tradeId);
     if (!trade) return;
 
     const closedTrade: TradeRecord = {
       ...trade,
+      direction: closeData.direction, // Set direction during close
       status: TradeStatus.CLOSED,
       endTime: closeData.endTime,
       openPrice: closeData.openPrice,

@@ -6,9 +6,9 @@ interface ActiveSessionProps {
   activeTrades: TradeRecord[];
   availablePairs: string[];
   checklistTemplate: ChecklistItem[];
-  startTrade: (pair: string, direction: 'LONG' | 'SHORT', notes: string) => void;
+  startTrade: (pair: string, notes: string) => void;
   updateTradeStatus: (tradeId: string, status: TradeStatus) => void;
-  closeTrade: (tradeId: string, closeData: { openPrice: number; closePrice: number; pnl: number; pnlPercentage: number; notes: string; endTime: number }) => void;
+  closeTrade: (tradeId: string, closeData: { direction: 'LONG' | 'SHORT'; openPrice: number; closePrice: number; pnl: number; pnlPercentage: number; notes: string; endTime: number }) => void;
   cancelTrade: (tradeId: string) => void;
 }
 
@@ -35,7 +35,6 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
   
   // --- Create Form State ---
   const [pair, setPair] = useState(availablePairs[0] || 'BTC/USDT');
-  const [direction, setDirection] = useState<'LONG' | 'SHORT'>('LONG');
   const [preNotes, setPreNotes] = useState('');
 
   // --- Checklist State (Per Trade) ---
@@ -43,12 +42,13 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
 
   // --- Closing State ---
   const [closeData, setCloseData] = useState({
+    direction: 'LONG' as 'LONG' | 'SHORT',
     openPrice: '',
     closePrice: '',
     pnl: '',
     pnlPercentage: '',
     notes: '',
-    endTime: '' 
+    endTime: ''
   });
 
   // --- Effects ---
@@ -64,7 +64,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
   const getSelectedTrade = () => activeTrades.find(t => t.id === selectedTradeId);
 
   const handleStart = () => {
-    startTrade(pair, direction, preNotes);
+    startTrade(pair, preNotes);
     setPreNotes(''); // Reset
     setViewMode('LIST'); // Go back to list to see the new trade
   };
@@ -72,7 +72,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
   const openDetail = (id: string) => {
     setSelectedTradeId(id);
     setCheckedItems({}); // Reset local check state for new view
-    setCloseData({ openPrice: '', closePrice: '', pnl: '', pnlPercentage: '', notes: '', endTime: '' });
+    setCloseData({ direction: 'LONG', openPrice: '', closePrice: '', pnl: '', pnlPercentage: '', notes: '', endTime: '' });
     setViewMode('DETAIL');
   };
 
@@ -103,7 +103,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
               onClick={() => openDetail(trade.id)}
               className="bg-crypto-card border border-gray-700 hover:border-indigo-500 rounded-xl p-6 cursor-pointer transition-all shadow-lg hover:shadow-indigo-500/10 relative overflow-hidden group"
             >
-               <div className={`absolute left-0 top-0 bottom-0 w-1 ${trade.direction === 'LONG' ? 'bg-emerald-500' : 'bg-rose-500'}`}></div>
+               <div className={`absolute left-0 top-0 bottom-0 w-1 ${trade.direction === 'LONG' ? 'bg-emerald-500' : trade.direction === 'SHORT' ? 'bg-rose-500' : 'bg-gray-500'}`}></div>
                <div className="flex justify-between items-start mb-2">
                  <h3 className="text-2xl font-black text-white">{trade.pair}</h3>
                  <span className={`px-2 py-1 rounded text-xs font-bold ${
@@ -113,8 +113,8 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
                  </span>
                </div>
                <div className="flex justify-between items-end">
-                 <span className={`font-bold text-lg ${trade.direction === 'LONG' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                   {trade.direction}
+                 <span className={`font-bold text-lg ${trade.direction === 'LONG' ? 'text-emerald-400' : trade.direction === 'SHORT' ? 'text-rose-400' : 'text-gray-400'}`}>
+                   {trade.direction || '待定'}
                  </span>
                  <span className="text-gray-500 font-mono text-sm">
                    {renderTime(trade.startTime)}
@@ -145,44 +145,17 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
            )}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">交易對</label>
-            <select
-              value={pair}
-              onChange={(e) => setPair(e.target.value)}
-              className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 outline-none font-mono tracking-wide appearance-none"
-            >
-              {availablePairs.map(p => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">方向</label>
-            <div className="grid grid-cols-2 gap-4">
-              <button
-                onClick={() => setDirection('LONG')}
-                className={`py-3 rounded-lg font-bold transition-all ${
-                  direction === 'LONG' 
-                    ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 ring-2 ring-emerald-400 ring-offset-2 ring-offset-gray-900' 
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-                }`}
-              >
-                做多
-              </button>
-              <button
-                onClick={() => setDirection('SHORT')}
-                className={`py-3 rounded-lg font-bold transition-all ${
-                  direction === 'SHORT' 
-                    ? 'bg-rose-600 text-white shadow-lg shadow-rose-900/50 ring-2 ring-rose-400 ring-offset-2 ring-offset-gray-900' 
-                    : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-                }`}
-              >
-                做空
-              </button>
-            </div>
-          </div>
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-400 mb-2">交易對</label>
+          <select
+            value={pair}
+            onChange={(e) => setPair(e.target.value)}
+            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 outline-none font-mono tracking-wide appearance-none"
+          >
+            {availablePairs.map(p => (
+              <option key={p} value={p}>{p}</option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-8">
@@ -226,9 +199,6 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
           <div className="flex justify-between items-center mb-6">
             <div>
                 <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                    <span className={activeTrade.direction === 'LONG' ? 'text-emerald-400' : 'text-rose-400'}>
-                        {activeTrade.direction}
-                    </span>
                     <span>{activeTrade.pair}</span>
                 </h2>
             </div>
@@ -266,13 +236,13 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
           </div>
 
           <div className="mt-8 pt-6 border-t border-gray-700">
-            <Button 
+            <Button
                 onClick={() => updateTradeStatus(activeTrade.id, TradeStatus.OPEN)}
                 disabled={!allChecked}
                 className={`w-full py-4 text-lg transition-all ${allChecked ? 'opacity-100 transform scale-100' : 'opacity-50'}`}
-                variant={allChecked ? (activeTrade.direction === 'LONG' ? 'success' : 'danger') : 'secondary'}
+                variant={allChecked ? 'primary' : 'secondary'}
             >
-                {allChecked ? `確認 ${activeTrade.direction === 'LONG' ? '買入做多' : '賣出做空'}` : `尚有 ${checklistTemplate.length - Object.keys(checkedItems).length} 項未確認`}
+                {allChecked ? '確認開倉' : `尚有 ${checklistTemplate.length - Object.keys(checkedItems).length} 項未確認`}
             </Button>
           </div>
         </div>
@@ -289,12 +259,14 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
         </button>
 
         <div className="bg-crypto-card border border-gray-700 rounded-2xl p-8 shadow-2xl text-center relative overflow-hidden">
-           <div className={`absolute top-0 left-0 w-full h-2 ${activeTrade.direction === 'LONG' ? 'bg-emerald-500' : 'bg-rose-500'} animate-pulse`}></div>
-           
+           <div className={`absolute top-0 left-0 w-full h-2 ${activeTrade.direction === 'LONG' ? 'bg-emerald-500' : activeTrade.direction === 'SHORT' ? 'bg-rose-500' : 'bg-indigo-500'} animate-pulse`}></div>
+
            <h2 className="text-5xl font-black text-white mb-2 tracking-tight">{activeTrade.pair}</h2>
-           <p className={`text-xl font-bold ${activeTrade.direction === 'LONG' ? 'text-emerald-400' : 'text-rose-400'}`}>
-               {activeTrade.direction}
-           </p>
+           {activeTrade.direction && (
+             <p className={`text-xl font-bold ${activeTrade.direction === 'LONG' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                 {activeTrade.direction}
+             </p>
+           )}
 
            <div className="my-8 p-4 bg-gray-900 rounded-xl border border-gray-800">
                <p className="text-gray-500 text-sm uppercase tracking-wider mb-1">持倉時間</p>
@@ -331,7 +303,33 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
     return (
       <div className="max-w-xl mx-auto bg-crypto-card border border-gray-700 rounded-2xl p-8 shadow-2xl">
         <h2 className="text-2xl font-bold mb-6 text-white text-center">💰 結算損益: {activeTrade.pair}</h2>
-        
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-400 mb-2">交易方向</label>
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              onClick={() => setCloseData({...closeData, direction: 'LONG'})}
+              className={`py-3 rounded-lg font-bold transition-all ${
+                closeData.direction === 'LONG'
+                  ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 ring-2 ring-emerald-400 ring-offset-2 ring-offset-gray-900'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+              }`}
+            >
+              做多 (LONG)
+            </button>
+            <button
+              onClick={() => setCloseData({...closeData, direction: 'SHORT'})}
+              className={`py-3 rounded-lg font-bold transition-all ${
+                closeData.direction === 'SHORT'
+                  ? 'bg-rose-600 text-white shadow-lg shadow-rose-900/50 ring-2 ring-rose-400 ring-offset-2 ring-offset-gray-900'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+              }`}
+            >
+              做空 (SHORT)
+            </button>
+          </div>
+        </div>
+
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-400 mb-2">結束時間</label>
           <input
@@ -404,9 +402,10 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
 
         <div className="flex gap-4">
             <Button onClick={() => { updateTradeStatus(activeTrade.id, TradeStatus.OPEN); }} variant="secondary" className="flex-1">返回持倉</Button>
-            <Button 
+            <Button
                 onClick={() => {
                     closeTrade(activeTrade.id, {
+                        direction: closeData.direction,
                         openPrice: parseFloat(closeData.openPrice),
                         closePrice: parseFloat(closeData.closePrice),
                         pnl: parseFloat(closeData.pnl),
@@ -415,7 +414,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
                         endTime: closeData.endTime ? new Date(closeData.endTime).getTime() : Date.now()
                     });
                     setViewMode('LIST');
-                }} 
+                }}
                 disabled={!closeData.pnl}
                 variant="primary"
                 className="flex-[2] bg-gradient-to-r from-indigo-600 to-purple-600 border-none"

@@ -67,11 +67,17 @@ export const Dashboard: React.FC<DashboardProps> = ({ history }) => {
                   </td>
                   <td className="px-6 py-4 font-medium text-white">{trade.pair}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-1 rounded text-xs font-bold ${
-                      trade.direction === 'LONG' ? 'bg-emerald-900/30 text-emerald-400' : 'bg-rose-900/30 text-rose-400'
-                    }`}>
-                      {trade.direction}
-                    </span>
+                    {trade.direction ? (
+                      <span className={`px-2 py-1 rounded text-xs font-bold ${
+                        trade.direction === 'LONG' ? 'bg-emerald-900/30 text-emerald-400' : 'bg-rose-900/30 text-rose-400'
+                      }`}>
+                        {trade.direction}
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 rounded text-xs font-bold bg-gray-900/30 text-gray-500">
+                        未設定
+                      </span>
+                    )}
                   </td>
                   <td className={`px-6 py-4 text-right font-mono font-bold ${(trade.pnl || 0) >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                     {(trade.pnl || 0) > 0 ? '+' : ''}{trade.pnl}
