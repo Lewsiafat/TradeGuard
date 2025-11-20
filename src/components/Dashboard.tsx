@@ -1,5 +1,6 @@
 import React from 'react';
 import { TradeRecord } from '../types';
+import { Tooltip } from './Tooltip';
 
 interface DashboardProps {
   history: TradeRecord[];
@@ -31,11 +32,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ history }) => {
           <p className="text-gray-500 text-sm font-medium">近期表現</p>
           <div className="flex gap-1 mt-3">
             {history.slice(0, 10).map((t, i) => (
-              <div 
-                key={i} 
-                className={`w-3 h-8 rounded-sm ${
-                    (t.pnl || 0) > 0 ? 'bg-emerald-500' : (t.pnl || 0) < 0 ? 'bg-rose-500' : 'bg-gray-600'
-                }`}
+              <div
+                key={i}
+                className={`w-3 h-8 rounded-sm ${(t.pnl || 0) > 0 ? 'bg-emerald-500' : (t.pnl || 0) < 0 ? 'bg-rose-500' : 'bg-gray-600'
+                  }`}
                 title={`${t.pair}: ${t.pnl}`}
               ></div>
             ))}
@@ -65,11 +65,21 @@ export const Dashboard: React.FC<DashboardProps> = ({ history }) => {
                   <td className="px-6 py-4 text-gray-400 text-sm">
                     {new Date(trade.startTime).toLocaleString('zh-TW', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                   </td>
-                  <td className="px-6 py-4 font-medium text-white">{trade.pair}</td>
+                  <td className="px-6 py-4 font-medium text-white">
+                    <div className="flex items-center gap-2">
+                      {trade.pair}
+                      {trade.notes && (
+                        <Tooltip content={trade.notes}>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500 hover:text-indigo-400 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </Tooltip>
+                      )}
+                    </div>
+                  </td>
                   <td className="px-6 py-4">
-                    <span className={`px-2 py-1 rounded text-xs font-bold ${
-                      trade.direction === 'LONG' ? 'bg-emerald-900/30 text-emerald-400' : 'bg-rose-900/30 text-rose-400'
-                    }`}>
+                    <span className={`px-2 py-1 rounded text-xs font-bold ${trade.direction === 'LONG' ? 'bg-emerald-900/30 text-emerald-400' : 'bg-rose-900/30 text-rose-400'
+                      }`}>
                       {trade.direction}
                     </span>
                   </td>

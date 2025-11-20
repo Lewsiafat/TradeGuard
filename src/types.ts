@@ -13,7 +13,7 @@ export interface ChecklistItem {
 export interface TradeRecord {
   id: string;
   pair: string;         // e.g., BTC/USDT
-  direction: 'LONG' | 'SHORT';
+  direction?: 'LONG' | 'SHORT';
   status: TradeStatus;
   startTime: number;
   endTime?: number;
