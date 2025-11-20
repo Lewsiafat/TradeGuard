@@ -9,7 +9,7 @@ import { Settings } from './components/Settings';
 const App: React.FC = () => {
   // --- State Management ---
   const [currentView, setCurrentView] = useState<ViewState>('ACTIVE_TRADES');
-  
+
   // Load initial data from local storage
   const [history, setHistory] = useState<TradeRecord[]>(() => {
     const saved = localStorage.getItem(STORAGE_KEYS.HISTORY);
@@ -51,11 +51,11 @@ const App: React.FC = () => {
 
   // --- Actions ---
 
-  const handleStartTrade = (pair: string, direction: 'LONG' | 'SHORT', notes: string) => {
+  const handleStartTrade = (pair: string, notes: string) => {
     const newTrade: TradeRecord = {
       id: Date.now().toString(),
       pair,
-      direction,
+      // direction is now optional and set at close
       status: TradeStatus.CHECKING,
       startTime: Date.now(),
       notes,
@@ -76,13 +76,14 @@ const App: React.FC = () => {
     }));
   };
 
-  const handleCloseTrade = (tradeId: string, closeData: { openPrice: number; closePrice: number; pnl: number; pnlPercentage: number; notes: string; endTime: number }) => {
+  const handleCloseTrade = (tradeId: string, closeData: { direction: 'LONG' | 'SHORT'; openPrice: number; closePrice: number; pnl: number; pnlPercentage: number; notes: string; endTime: number }) => {
     const trade = activeTrades.find(t => t.id === tradeId);
     if (!trade) return;
 
     const closedTrade: TradeRecord = {
       ...trade,
       status: TradeStatus.CLOSED,
+      direction: closeData.direction, // Set direction here
       endTime: closeData.endTime,
       openPrice: closeData.openPrice,
       closePrice: closeData.closePrice,
@@ -108,10 +109,10 @@ const App: React.FC = () => {
     switch (currentView) {
       case 'DASHBOARD':
         return <Dashboard history={history} />;
-      
+
       case 'ACTIVE_TRADES':
         return (
-          <ActiveSession 
+          <ActiveSession
             activeTrades={activeTrades}
             availablePairs={pairs}
             checklistTemplate={template}
@@ -121,20 +122,20 @@ const App: React.FC = () => {
             cancelTrade={handleCancelTrade}
           />
         );
-      
+
       case 'HISTORY':
         return <Dashboard history={history} />;
-      
+
       case 'SETTINGS':
         return (
-          <Settings 
-            template={template} 
-            setTemplate={setTemplate} 
+          <Settings
+            template={template}
+            setTemplate={setTemplate}
             pairs={pairs}
             setPairs={setPairs}
           />
         );
-        
+
       default:
         return <Dashboard history={history} />;
     }
