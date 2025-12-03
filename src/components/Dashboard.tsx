@@ -16,20 +16,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ history }) => {
     <div className="space-y-8">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-crypto-card border border-gray-800 p-6 rounded-2xl">
-          <p className="text-gray-500 text-sm font-medium">總收益 (PnL)</p>
+        <div className="bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">總收益 (PnL)</p>
           <p className={`text-3xl font-bold mt-2 ${totalPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
             {totalPnl >= 0 ? '+' : ''}{totalPnl.toFixed(2)} <span className="text-sm text-gray-600">USDT</span>
           </p>
         </div>
-        <div className="bg-crypto-card border border-gray-800 p-6 rounded-2xl">
-          <p className="text-gray-500 text-sm font-medium">勝率 (Win Rate)</p>
+        <div className="bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">勝率 (Win Rate)</p>
           <p className="text-3xl font-bold mt-2 text-indigo-400">
             {winRate}% <span className="text-sm text-gray-600">/ {totalTrades} 筆</span>
           </p>
         </div>
-        <div className="bg-crypto-card border border-gray-800 p-6 rounded-2xl">
-          <p className="text-gray-500 text-sm font-medium">近期表現</p>
+        <div className="bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">近期表現</p>
           <div className="flex gap-1 mt-3">
             {history.slice(0, 10).map((t, i) => (
               <div
@@ -45,13 +45,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ history }) => {
       </div>
 
       {/* Recent History Table */}
-      <div className="bg-crypto-card border border-gray-800 rounded-2xl overflow-hidden">
-        <div className="p-6 border-b border-gray-800">
-          <h3 className="text-xl font-bold text-white">近期交易紀錄</h3>
+      <div className="bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-none">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-800">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">近期交易紀錄</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-gray-900/50 text-gray-400 text-sm uppercase tracking-wider">
+            <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-400 text-sm uppercase tracking-wider">
               <tr>
                 <th className="px-6 py-4">時間</th>
                 <th className="px-6 py-4">交易對</th>
@@ -59,13 +59,13 @@ export const Dashboard: React.FC<DashboardProps> = ({ history }) => {
                 <th className="px-6 py-4 text-right">損益</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800">
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
               {history.map((trade) => (
-                <tr key={trade.id} className="hover:bg-gray-800/50 transition-colors">
-                  <td className="px-6 py-4 text-gray-400 text-sm">
+                <tr key={trade.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                  <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm">
                     {new Date(trade.startTime).toLocaleString('zh-TW', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                   </td>
-                  <td className="px-6 py-4 font-medium text-white">
+                  <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                     <div className="flex items-center gap-2">
                       {trade.pair}
                       {trade.notes && (

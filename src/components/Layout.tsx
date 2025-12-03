@@ -1,5 +1,6 @@
 import React from 'react';
 import { ViewState } from '../types';
+import { ThemeToggle } from './ThemeToggle';
 
 interface LayoutProps {
   currentView: ViewState;
@@ -16,18 +17,19 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, setCurrentView, chi
   ];
 
   return (
-    <div className="min-h-screen bg-crypto-dark text-gray-100 font-sans">
+    <div className="min-h-screen bg-gray-50 dark:bg-crypto-dark text-gray-900 dark:text-gray-100 font-sans transition-colors duration-200">
       {/* Mobile Header */}
-      <header className="lg:hidden bg-crypto-card border-b border-gray-800 p-4 flex justify-between items-center sticky top-0 z-10">
+      <header className="lg:hidden bg-white dark:bg-crypto-card border-b border-gray-200 dark:border-gray-800 p-4 flex justify-between items-center sticky top-0 z-10">
         <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
           TradeGuard
         </h1>
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 items-center">
+          <ThemeToggle />
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => setCurrentView(item.id)}
-              className={`p-2 rounded-md text-lg ${currentView === item.id ? 'bg-gray-700 text-white' : 'text-gray-400'}`}
+              className={`p-2 rounded-md text-lg ${currentView === item.id ? 'bg-gray-200 dark:bg-gray-700 text-indigo-600 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
             >
               {item.icon}
             </button>
@@ -37,7 +39,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, setCurrentView, chi
 
       <div className="flex max-w-7xl mx-auto min-h-screen">
         {/* Desktop Sidebar */}
-        <aside className="hidden lg:flex flex-col w-64 border-r border-gray-800 bg-crypto-dark p-6 sticky top-0 h-screen">
+        <aside className="hidden lg:flex flex-col w-64 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-crypto-dark p-6 sticky top-0 h-screen">
           <div className="mb-8">
             <h1 className="text-2xl font-extrabold tracking-tight">
               <span className="text-indigo-500">Trade</span>Guard
@@ -50,11 +52,10 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, setCurrentView, chi
               <button
                 key={item.id}
                 onClick={() => setCurrentView(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                  currentView === item.id
-                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/50'
-                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
-                }`}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentView === item.id
+                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 dark:shadow-indigo-900/50'
+                  : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-indigo-600 dark:hover:text-white'
+                  }`}
               >
                 <span className="text-xl">{item.icon}</span>
                 <span className="font-medium">{item.label}</span>
@@ -62,8 +63,11 @@ export const Layout: React.FC<LayoutProps> = ({ currentView, setCurrentView, chi
             ))}
           </nav>
 
-          <div className="mt-auto pt-6 border-t border-gray-800">
-            <div className="text-xs text-gray-600 text-center">
+          <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-4">
+            <div className="flex justify-center">
+              <ThemeToggle />
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-600 text-center">
               &copy; 2025 TradeGuard v1.1
             </div>
           </div>

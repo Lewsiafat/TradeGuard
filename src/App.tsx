@@ -103,6 +103,19 @@ const App: React.FC = () => {
     }
   };
 
+  const handleImportData = (data: any) => {
+    try {
+      if (data.history) setHistory(data.history);
+      if (data.template) setTemplate(data.template);
+      if (data.pairs) setPairs(data.pairs);
+      if (data.activeTrades) setActiveTrades(data.activeTrades);
+      alert('資料匯入成功！');
+    } catch (error) {
+      console.error('Import failed:', error);
+      alert('資料匯入失敗，請檢查檔案格式。');
+    }
+  };
+
   // --- Render Logic ---
 
   const renderContent = () => {
@@ -133,6 +146,9 @@ const App: React.FC = () => {
             setTemplate={setTemplate}
             pairs={pairs}
             setPairs={setPairs}
+            activeTrades={activeTrades}
+            history={history}
+            onImport={handleImportData}
           />
         );
 

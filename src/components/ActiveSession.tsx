@@ -101,7 +101,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
     return (
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-white">進行中的交易 ({activeTrades.length})</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">進行中的交易 ({activeTrades.length})</h2>
           <Button onClick={() => setViewMode('CREATE')} variant="primary">
             + 新增交易
           </Button>
@@ -112,12 +112,12 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
             <div
               key={trade.id}
               onClick={() => openDetail(trade.id)}
-              className="bg-crypto-card border border-gray-700 hover:border-indigo-500 rounded-xl p-6 cursor-pointer transition-all shadow-lg hover:shadow-indigo-500/10 relative overflow-hidden group"
+              className="bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-xl p-6 cursor-pointer transition-all shadow-lg hover:shadow-indigo-500/10 relative overflow-hidden group"
             >
               <div className={`absolute left-0 top-0 bottom-0 w-1 ${trade.direction === 'LONG' ? 'bg-emerald-500' : 'bg-rose-500'}`}></div>
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-2xl font-black text-white">{trade.pair}</h3>
-                <span className={`px-2 py-1 rounded text-xs font-bold ${trade.status === TradeStatus.CHECKING ? 'bg-yellow-900/30 text-yellow-400' : 'bg-indigo-900/30 text-indigo-400'
+                <h3 className="text-2xl font-black text-gray-900 dark:text-white">{trade.pair}</h3>
+                <span className={`px-2 py-1 rounded text-xs font-bold ${trade.status === TradeStatus.CHECKING ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400' : 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
                   }`}>
                   {trade.status === TradeStatus.CHECKING ? '檢查中' : '持倉中'}
                 </span>
@@ -133,7 +133,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
             </div>
           ))}
           {activeTrades.length === 0 && (
-            <div className="col-span-full text-center py-12 bg-gray-800/30 rounded-xl border border-dashed border-gray-700">
+            <div className="col-span-full text-center py-12 bg-gray-50 dark:bg-gray-800/30 rounded-xl border border-dashed border-gray-300 dark:border-gray-700">
               <p className="text-gray-500">目前沒有進行中的交易</p>
             </div>
           )}
@@ -145,9 +145,9 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
   // 2. CREATE VIEW
   if (viewMode === 'CREATE') {
     return (
-      <div className="max-w-2xl mx-auto bg-crypto-card border border-gray-800 rounded-2xl p-8 shadow-xl">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-800 rounded-2xl p-8 shadow-xl">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-white">🚀 建立新交易計畫</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">🚀 建立新交易計畫</h2>
           {activeTrades.length > 0 && (
             <button onClick={() => setViewMode('LIST')} className="text-gray-400 hover:text-white">
               取消
@@ -157,11 +157,11 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">交易對</label>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">交易對</label>
             <select
               value={pair}
               onChange={(e) => setPair(e.target.value)}
-              className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 outline-none font-mono tracking-wide appearance-none"
+              className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none font-mono tracking-wide appearance-none"
             >
               {availablePairs.map(p => (
                 <option key={p} value={p}>{p}</option>
@@ -172,12 +172,12 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
         {/* Direction selection removed */}
 
         <div className="mb-8">
-          <label className="block text-sm font-medium text-gray-400 mb-2">交易筆記 (選填)</label>
+          <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">交易筆記 (選填)</label>
           <textarea
             value={preNotes}
             onChange={(e) => setPreNotes(e.target.value)}
             placeholder="為什麼要開這筆單？邏輯是什麼？"
-            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 outline-none h-24 resize-none"
+            className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none h-24 resize-none"
           />
         </div>
 
@@ -206,12 +206,12 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
           ← 返回列表
         </button>
 
-        <div className="bg-crypto-card border border-gray-700 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+        <div className="bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 h-1 bg-indigo-600 transition-all duration-500" style={{ width: `${progress}%` }}></div>
 
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
                 <span className={activeTrade.direction === 'LONG' ? 'text-emerald-400' : activeTrade.direction === 'SHORT' ? 'text-rose-400' : 'text-gray-400'}>
                   {activeTrade.direction || 'PENDING'}
                 </span>
@@ -228,14 +228,14 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
               <label
                 key={item.id}
                 className={`flex items-start p-4 rounded-xl border transition-all cursor-pointer select-none ${checkedItems[item.id]
-                  ? 'bg-indigo-900/20 border-indigo-500/50'
-                  : 'bg-gray-800/50 border-gray-700 hover:border-gray-500'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-500/50'
+                  : 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500'
                   }`}
               >
                 <div className="relative flex items-center mt-0.5">
                   <input
                     type="checkbox"
-                    className="appearance-none w-6 h-6 border-2 border-gray-500 rounded bg-gray-800 checked:bg-indigo-500 checked:border-indigo-500 transition-colors cursor-pointer"
+                    className="appearance-none w-6 h-6 border-2 border-gray-400 dark:border-gray-500 rounded bg-white dark:bg-gray-800 checked:bg-indigo-500 checked:border-indigo-500 transition-colors cursor-pointer"
                     checked={!!checkedItems[item.id]}
                     onChange={(e) => setCheckedItems(prev => ({ ...prev, [item.id]: e.target.checked }))}
                   />
@@ -243,7 +243,7 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
                     <svg className="w-4 h-4 absolute top-1 left-1 text-white pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
                   )}
                 </div>
-                <span className={`ml-3 text-lg ${checkedItems[item.id] ? 'text-white font-medium' : 'text-gray-300'}`}>
+                <span className={`ml-3 text-lg ${checkedItems[item.id] ? 'text-gray-900 dark:text-white font-medium' : 'text-gray-500 dark:text-gray-300'}`}>
                   {item.text}
                 </span>
               </label>
@@ -273,17 +273,17 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
           ← 返回列表
         </button>
 
-        <div className="bg-crypto-card border border-gray-700 rounded-2xl p-8 shadow-2xl text-center relative overflow-hidden">
+        <div className="bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-700 rounded-2xl p-8 shadow-2xl text-center relative overflow-hidden">
           <div className={`absolute top-0 left-0 w-full h-2 ${activeTrade.direction === 'LONG' ? 'bg-emerald-500' : 'bg-rose-500'} animate-pulse`}></div>
 
-          <h2 className="text-5xl font-black text-white mb-2 tracking-tight">{activeTrade.pair}</h2>
+          <h2 className="text-5xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">{activeTrade.pair}</h2>
           <p className={`text-xl font-bold ${activeTrade.direction === 'LONG' ? 'text-emerald-400' : activeTrade.direction === 'SHORT' ? 'text-rose-400' : 'text-gray-400'}`}>
             {activeTrade.direction || 'PENDING'}
           </p>
 
-          <div className="my-8 p-4 bg-gray-900 rounded-xl border border-gray-800">
+          <div className="my-8 p-4 bg-gray-50 dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800">
             <p className="text-gray-500 text-sm uppercase tracking-wider mb-1">持倉時間</p>
-            <p className="text-3xl font-mono text-indigo-300">
+            <p className="text-3xl font-mono text-indigo-600 dark:text-indigo-300">
               <Timer startTime={activeTrade.startTime} />
             </p>
           </div>
@@ -302,9 +302,9 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
         </div>
 
         {activeTrade.notes && (
-          <div className="bg-gray-900/50 border border-gray-800 p-4 rounded-xl">
-            <h4 className="text-gray-500 text-sm font-bold mb-2">開倉筆記</h4>
-            <p className="text-gray-300">{activeTrade.notes}</p>
+          <div className="bg-gray-100 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 p-4 rounded-xl">
+            <h4 className="text-gray-600 dark:text-gray-500 text-sm font-bold mb-2">開倉筆記</h4>
+            <p className="text-gray-800 dark:text-gray-300">{activeTrade.notes}</p>
           </div>
         )}
       </div>
@@ -314,27 +314,27 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
   // --- PHASE: CLOSING FORM ---
   if (activeTrade.status === TradeStatus.CLOSED) {
     return (
-      <div className="max-w-xl mx-auto bg-crypto-card border border-gray-700 rounded-2xl p-8 shadow-2xl">
-        <h2 className="text-2xl font-bold mb-6 text-white text-center">💰 結算損益: {activeTrade.pair}</h2>
+      <div className="max-w-xl mx-auto bg-white dark:bg-crypto-card border border-gray-200 dark:border-gray-700 rounded-2xl p-8 shadow-2xl">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white text-center">💰 結算損益: {activeTrade.pair}</h2>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-400 mb-2">結束時間</label>
+          <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">結束時間</label>
           <input
             type="datetime-local"
             value={closeData.endTime}
             onChange={(e) => setCloseData({ ...closeData, endTime: e.target.value })}
-            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
           />
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-400 mb-2">交易方向</label>
+          <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">交易方向</label>
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => setCloseData({ ...closeData, direction: 'LONG' })}
               className={`py-3 rounded-lg font-bold transition-all ${closeData.direction === 'LONG'
-                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-900/50 ring-2 ring-emerald-400 ring-offset-2 ring-offset-gray-900'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-500/30 dark:shadow-emerald-900/50 ring-2 ring-emerald-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-900'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
             >
               做多 (LONG)
@@ -342,8 +342,8 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
             <button
               onClick={() => setCloseData({ ...closeData, direction: 'SHORT' })}
               className={`py-3 rounded-lg font-bold transition-all ${closeData.direction === 'SHORT'
-                ? 'bg-rose-600 text-white shadow-lg shadow-rose-900/50 ring-2 ring-rose-400 ring-offset-2 ring-offset-gray-900'
-                : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                ? 'bg-rose-600 text-white shadow-lg shadow-rose-500/30 dark:shadow-rose-900/50 ring-2 ring-rose-400 ring-offset-2 ring-offset-white dark:ring-offset-gray-900'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                 }`}
             >
               做空 (SHORT)
@@ -353,59 +353,59 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
 
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">開倉價格</label>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">開倉價格</label>
             <input
               type="number"
               value={closeData.openPrice}
               onChange={(e) => setCloseData({ ...closeData, openPrice: e.target.value })}
               placeholder="Entry Price"
-              className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">平倉均價</label>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">平倉均價</label>
             <input
               type="number"
               value={closeData.closePrice}
               onChange={(e) => setCloseData({ ...closeData, closePrice: e.target.value })}
               placeholder="Exit Price"
-              className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">盈虧金額 (USDT)</label>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">盈虧金額 (USDT)</label>
             <input
               type="number"
               value={closeData.pnl}
               onChange={(e) => setCloseData({ ...closeData, pnl: e.target.value })}
               placeholder="0.00"
-              className={`w-full bg-gray-900 border-2 rounded-lg px-4 py-2 font-bold focus:outline-none ${parseFloat(closeData.pnl) > 0 ? 'border-emerald-500 text-emerald-400' : parseFloat(closeData.pnl) < 0 ? 'border-rose-500 text-rose-400' : 'border-gray-700 text-white'
+              className={`w-full bg-gray-50 dark:bg-gray-900 border-2 rounded-lg px-4 py-2 font-bold focus:outline-none ${parseFloat(closeData.pnl) > 0 ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : parseFloat(closeData.pnl) < 0 ? 'border-rose-500 text-rose-600 dark:text-rose-400' : 'border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white'
                 }`}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-2">盈虧百分比 (%)</label>
+            <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">盈虧百分比 (%)</label>
             <input
               type="number"
               value={closeData.pnlPercentage}
               onChange={(e) => setCloseData({ ...closeData, pnlPercentage: e.target.value })}
               placeholder="0.00"
-              className={`w-full bg-gray-900 border-2 rounded-lg px-4 py-2 font-bold focus:outline-none ${parseFloat(closeData.pnlPercentage) > 0 ? 'border-emerald-500 text-emerald-400' : parseFloat(closeData.pnlPercentage) < 0 ? 'border-rose-500 text-rose-400' : 'border-gray-700 text-white'
+              className={`w-full bg-gray-50 dark:bg-gray-900 border-2 rounded-lg px-4 py-2 font-bold focus:outline-none ${parseFloat(closeData.pnlPercentage) > 0 ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400' : parseFloat(closeData.pnlPercentage) < 0 ? 'border-rose-500 text-rose-600 dark:text-rose-400' : 'border-gray-300 dark:border-gray-700 text-gray-900 dark:text-white'
                 }`}
             />
           </div>
         </div>
 
         <div className="mb-8">
-          <label className="block text-sm font-medium text-gray-400 mb-2">結算筆記 (檢討)</label>
+          <label className="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">結算筆記 (檢討)</label>
           <textarea
             value={closeData.notes}
             onChange={(e) => setCloseData({ ...closeData, notes: e.target.value })}
             placeholder="這筆交易做得好嗎？有沒有遵守紀律？"
-            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 outline-none h-24 resize-none"
+            className="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none h-24 resize-none"
           />
         </div>
 

@@ -10,6 +10,12 @@
 ### Dashboard Improvements
 - **Trade Notes Tooltip**: Added a tooltip to the trade history list. Hover over the new help icon next to a trade pair to view the full trade notes without cluttering the table.
 
+### Theme Support
+- **Dark/Light Mode**: Added a theme toggle to switch between dark and light modes. The preference is saved locally.
+
+### Data Management
+- **Export/Import**: You can now export your trade history and settings to a JSON file for backup, and import it back to restore your data.
+
 ## 🛠 Technical Changes
 
 ### Directory Structure Refactor
