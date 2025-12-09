@@ -1,7 +1,7 @@
 import { ChecklistItem } from './types';
 
 export const DEFAULT_CHECKLIST: ChecklistItem[] = [
-
+  { id: 'c1', text: 'GEMINI 產生分析報告', isRequired: true },
   { id: 'c2', text: 'Claude 產生分析報告', isRequired: true },
   { id: 'c3', text: 'ChatGPT 產生分析報告', isRequired: true },
   { id: 'c4', text: '產生三種AI的綜合分析報告', isRequired: true },
