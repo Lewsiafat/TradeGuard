@@ -2,12 +2,12 @@
 
 ## Phase 1: 實時報價基礎設施
 - [x] Task: 建立加密貨幣報價服務 (WebSocket API 串接) ea904de
-    - [ ] 撰寫測試驗證 WebSocket 連線與訊息解析
-    - [ ] 實作報價服務邏輯
-- [ ] Task: 在 UI 整合實時價格顯示元件
-    - [ ] 撰寫測試驗證價格更新時的 UI 反應
-    - [ ] 實作具備微動效的價格顯示元件
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: 實時報價基礎設施' (Protocol in workflow.md)
+    - [x] 撰寫測試驗證 WebSocket 連線與訊息解析
+    - [x] 實作報價服務邏輯
+- [x] Task: 在 UI 整合實時價格顯示元件 1f69460
+    - [x] 撰寫測試驗證價格更新時的 UI 反應
+    - [x] 實作具備微動效的價格顯示元件
+- [~] Task: Conductor - User Manual Verification 'Phase 1: 實時報價基礎設施' (Protocol in workflow.md)
 
 ## Phase 2: AI 分析框架整合
 - [ ] Task: 建立 AI 分析服務基礎模組 (串接 API)
