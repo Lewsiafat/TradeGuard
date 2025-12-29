@@ -51,6 +51,24 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #64748b;
     }
+
+    @keyframes flash-green {
+      0% { color: #10b981; transform: scale(1.05); }
+      100% { color: inherit; transform: scale(1); }
+    }
+
+    @keyframes flash-red {
+      0% { color: #ef4444; transform: scale(1.05); }
+      100% { color: inherit; transform: scale(1); }
+    }
+
+    .animate-flash-green {
+      animation: flash-green 0.5s ease-out;
+    }
+
+    .animate-flash-red {
+      animation: flash-red 0.5s ease-out;
+    }
   </style>
   <script type="importmap">
 {
