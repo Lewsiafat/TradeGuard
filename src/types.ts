@@ -33,3 +33,14 @@ export interface AppState {
 }
 
 export type ViewState = 'DASHBOARD' | 'ACTIVE_TRADES' | 'HISTORY' | 'SETTINGS';
+
+export interface AIAnalysisReport {
+  summary: string;
+  technicalIndicators: {
+    trend: string;
+    support: number;
+    resistance: number;
+  };
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH';
+  timestamp: number;
+}
