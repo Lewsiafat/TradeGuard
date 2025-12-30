@@ -24,7 +24,7 @@
 - **自動化腳本**：Node.js (用於版本發布腳本 scripts/release.js)
 - **套件管理**：npm / package-lock.json
 
-# 未來擴充方向 (Future Considerations)
+# 外部服務整合 (External Services)
 
-- **實時行情**：預計整合 WebSocket API 或 REST API (如 Binance API) 以獲取實時價格。
-- **AI 整合**：預計串接 OpenAI/Gemini/Claude API 進行市場數據分析與報告生成。
+- **行情服務**：Binance WebSocket API - 用於實時加密貨幣價格推送。
+- **AI 服務**：Google Gemini API (@google/genai) - 用於生成市場分析報告與交易建議。

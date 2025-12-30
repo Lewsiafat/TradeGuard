@@ -1,5 +1,12 @@
 # Release Notes
 
+## [0.1.0] - 2025-12-29
+
+- Feature: 整合 Binance WebSocket 實時報價顯示，支援漲跌閃爍動效。
+- Feature: 整合 Google Gemini AI 行情分析服務，支援按需生成市場分析報告。
+- Style: 優化行情與分析報告介面樣式，提升專業感。
+- Docs: 更新 README.md 文件。
+
 ## [0.0.2] - 2025-12-17
 
 this is test
