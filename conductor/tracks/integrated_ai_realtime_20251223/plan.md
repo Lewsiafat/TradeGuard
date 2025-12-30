@@ -10,10 +10,10 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: 實時報價基礎設施' (Protocol in workflow.md) 9581a7d
 
 ## Phase 2: AI 分析框架整合
-- [ ] Task: 建立 AI 分析服務基礎模組 (串接 API)
-    - [ ] 撰寫測試驗證 API 請求與回應解析
-    - [ ] 實作 AI 服務邏輯
-- [ ] Task: 實作「按需分析」報告生成功能
+- [x] Task: 建立 AI 分析服務基礎模組 (串接 API) 45b09b9
+    - [x] 撰寫測試驗證 API 請求與回應解析
+    - [x] 實作 AI 服務邏輯
+- [~] Task: 實作「按需分析」報告生成功能
     - [ ] 撰寫測試驗證報告生成邏輯與格式
     - [ ] 實作介面按鈕與報告呈現區域
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: AI 分析框架整合' (Protocol in workflow.md)
