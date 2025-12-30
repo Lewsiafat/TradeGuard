@@ -13,10 +13,10 @@
 - [x] Task: 建立 AI 分析服務基礎模組 (串接 API) 45b09b9
     - [x] 撰寫測試驗證 API 請求與回應解析
     - [x] 實作 AI 服務邏輯
-- [~] Task: 實作「按需分析」報告生成功能
-    - [ ] 撰寫測試驗證報告生成邏輯與格式
-    - [ ] 實作介面按鈕與報告呈現區域
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: AI 分析框架整合' (Protocol in workflow.md)
+- [x] Task: 實作「按需分析」報告生成功能 9bfccd5
+    - [x] 撰寫測試驗證報告生成邏輯與格式
+    - [x] 實作介面按鈕與報告呈現區域
+- [~] Task: Conductor - User Manual Verification 'Phase 2: AI 分析框架整合' (Protocol in workflow.md)
 
 ## Phase 3: 最終優化與文件更新
 - [ ] Task: 優化實時行情性能與 AI 報告介面樣式
