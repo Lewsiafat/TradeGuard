@@ -17,7 +17,7 @@ describe('AIAnalysis Component', () => {
 
   it('should render the analyze button', () => {
     render(<AIAnalysis pair="BTCUSDT" />);
-    expect(screen.getByText(/分析 BTCUSDT/i)).toBeInTheDocument();
+    expect(screen.getByText(/獲取報告/i)).toBeInTheDocument();
   });
 
   it('should show loading state and then display the report', async () => {
@@ -36,10 +36,10 @@ describe('AIAnalysis Component', () => {
 
     render(<AIAnalysis pair="BTCUSDT" />);
     
-    const button = screen.getByText(/分析 BTCUSDT/i);
+    const button = screen.getByText(/獲取報告/i);
     fireEvent.click(button);
 
-    expect(screen.getByText(/分析中.../i)).toBeInTheDocument();
+    expect(screen.getByText(/分析中/i)).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText(/看漲趨勢強勁。/i)).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('AIAnalysis Component', () => {
 
     render(<AIAnalysis pair="BTCUSDT" />);
     
-    fireEvent.click(screen.getByText(/分析 BTCUSDT/i));
+    fireEvent.click(screen.getByText(/獲取報告/i));
 
     await waitFor(() => {
       expect(screen.getByText(/分析失敗，請稍後再試。/i)).toBeInTheDocument();

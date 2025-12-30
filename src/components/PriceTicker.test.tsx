@@ -71,11 +71,11 @@ describe('PriceTicker', () => {
     });
 
     const priceElement = screen.getByText('50100.00');
-    expect(priceElement).toHaveClass('text-green-500');
+    expect(priceElement).toHaveClass('text-emerald-500');
     expect(priceElement).toHaveClass('animate-flash-green');
   });
 
-  it('should apply red color when price goes down', () => {
+  it('should apply red color and flash animation when price goes down', () => {
      let priceCallback: any;
     (cryptoService.subscribe as any).mockImplementation((symbol: string, cb: any) => {
         if (symbol === 'BTCUSDT') {
@@ -96,7 +96,7 @@ describe('PriceTicker', () => {
     });
 
     const priceElement = screen.getByText('49900.00');
-    expect(priceElement).toHaveClass('text-red-500');
+    expect(priceElement).toHaveClass('text-rose-500');
     expect(priceElement).toHaveClass('animate-flash-red');
   });
 });
