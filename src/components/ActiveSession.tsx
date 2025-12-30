@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TradeRecord, ChecklistItem, TradeStatus } from '../types';
 import { Button } from './Button';
+import { AIAnalysis } from './AIAnalysis';
 
 interface ActiveSessionProps {
   activeTrades: TradeRecord[];
@@ -221,6 +222,10 @@ export const ActiveSession: React.FC<ActiveSessionProps> = ({
             <button onClick={() => { cancelTrade(activeTrade.id); setViewMode('LIST'); }} className="text-gray-500 hover:text-white text-sm underline">
               取消此交易
             </button>
+          </div>
+
+          <div className="mb-6">
+            <AIAnalysis pair={activeTrade.pair} />
           </div>
 
           <div className="space-y-4">
