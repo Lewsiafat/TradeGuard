@@ -3,7 +3,7 @@ import { aiService } from './aiService';
 
 // Mock GoogleGenerativeAI
 vi.mock('@google/genai', () => {
-  const GoogleGenerativeAI = vi.fn().mockImplementation(function(this: any) {
+  const MockGAI = vi.fn().mockImplementation(function(this: any) {
     this.getGenerativeModel = vi.fn().mockReturnValue({
       generateContent: vi.fn().mockResolvedValue({
         response: {
@@ -20,7 +20,10 @@ vi.mock('@google/genai', () => {
       })
     });
   });
-  return { GoogleGenerativeAI };
+  return { 
+    GoogleGenerativeAI: MockGAI,
+    default: { GoogleGenerativeAI: MockGAI }
+  };
 });
 
 describe('AIService', () => {

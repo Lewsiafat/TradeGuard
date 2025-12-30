@@ -1,13 +1,20 @@
-import { GoogleGenerativeAI } from '@google/genai';
+import * as GenAIModule from '@google/genai';
 import { AIAnalysisReport } from '../types';
 
+// Compatibility layer for different module systems (CJS/ESM/CDN)
+const GoogleGenerativeAI = (GenAIModule as any).GoogleGenerativeAI || (GenAIModule as any).default?.GoogleGenerativeAI;
+
 export class AIService {
-  private genAI: GoogleGenerativeAI | null = null;
+  private genAI: any = null;
   private apiKey: string = '';
 
   setApiKey(key: string) {
     this.apiKey = key;
-    this.genAI = new GoogleGenerativeAI(key);
+    if (GoogleGenerativeAI) {
+      this.genAI = new GoogleGenerativeAI(key);
+    } else {
+      console.error('GoogleGenerativeAI module not found');
+    }
   }
 
   async analyzePair(pair: string): Promise<AIAnalysisReport> {
